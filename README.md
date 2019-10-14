@@ -5,31 +5,31 @@ Machine Learning is an amazing topic which really fascinates me. As a machine le
 
 ### Machine Learning
 
--[] Bias-variance trade-off
+- [] Bias-variance trade-off
 
--[] Linear Regression
+- [] Linear Regression
 
--[] Logistic Regression (lasso and ridge)
+- [] Logistic Regression (lasso and ridge)
 
--[] KNN
+- [] KNN
 
--[] Decision Trees
+- [] Decision Trees
 
--[] Emsemble Algorithms: boosting/bagging
+- [] Emsemble Algorithms: boosting/bagging
 
--[] SVM
+- [] SVM
 
--[] Neural Networks
+- [] Neural Networks
 
--[] EM algorithms
+- [] EM algorithms
 
--[] Graph Models
+- [] Graph Models
 
--[] Sampling
+- [] Sampling
 
--[] Dimension Reduction: PCA
+- [] Dimension Reduction: PCA
 
--[] Clustering: LDA
+- [] Clustering: LDA
 
 ### Deep Learning
 
