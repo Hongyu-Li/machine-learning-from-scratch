@@ -5,7 +5,7 @@ Machine Learning is an amazing topic which really fascinates me. As a machine le
 
 ### Machine Learning
 
-- [ ] Bias-variance trade-off
+- [x] Core Concepts of ML
 
 - [ ] Linear Regression
 
