@@ -38,3 +38,6 @@ class LogisticRegression:
             training_loss.append(loss)
             self.weights -= self.learning_rate * (X.T.dot(Y_pred-Y) / N)
         return training_loss
+
+    def predict(self,X_new):
+        return X_new.dot(self.weights)
