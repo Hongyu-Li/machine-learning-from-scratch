@@ -7,7 +7,7 @@ Machine Learning is an amazing topic which really fascinates me. As a machine le
 
 - [x] Core Concepts of ML
 
-- [ ] Linear Regression
+- [x] Linear Regression
 
 - [ ] Logistic Regression (lasso and ridge)
 
