@@ -19,9 +19,8 @@ class LinearRegression:
         if self.intercept:
             ones = np.reshape(np.ones(N),(N,1))
             X = np.hstack((ones, X))
-            self.beta_hat = np.zeros(p+1)
-        else:
-            self.beta_hat = np.zeros(p)
+            p = p + 1
+        self.beta_hat = np.zeros(p)
 
         if self.gradient_descent:
             training_loss = []
