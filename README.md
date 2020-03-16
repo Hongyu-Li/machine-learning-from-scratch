@@ -1,5 +1,5 @@
 # Machine Learning From Scratch
-Machine Learning is an amazing topic which really fascinates me. As a machine learner, I know how hard it is to get it from zero to one. In this repository, I am trying to implement most of classical machine learning algorithms from scratch with Python. 
+Machine Learning is an amazing topic which really fascinates me. As a machine learner, I know how hard it is to get it from zero to one. In this repository, I am trying to implement most of classical machine learning algorithms from scratch with Python(mainly numpy). 
 
 ## TODO
 
@@ -9,7 +9,7 @@ Machine Learning is an amazing topic which really fascinates me. As a machine le
 
 - [x] Linear Regression
 
-- [ ] Logistic Regression (lasso and ridge)
+- [x] Logistic Regression (lasso and ridge)
 
 - [ ] KNN
 
