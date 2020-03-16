@@ -11,7 +11,9 @@ Machine Learning is an amazing topic which really fascinates me. As a machine le
 
 - [x] Logistic Regression (lasso and ridge)
 
-- [ ] Clustering: K-means & KNN
+- [ ] KNN
+
+- [ ] Clustering: K-means
 
 - [ ] Decision Trees
 
