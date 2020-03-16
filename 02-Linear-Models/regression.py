@@ -10,38 +10,38 @@ class LinearRegression:
         self.learning_rate = learning_rate
         self.beta_hat = []
         self.intercept = intercept
-        self._X = None
-        self._Y = None
-        self._p = None
-        self._N = None
+        self.__X = None
+        self.__Y = None
+        self.__p = None
+        self.__N = None
 
-    def _preprocess_data(self, X, Y):
-        self._X = np.asarray(X)
-        self._Y = np.asarray(Y)
-        self._p = X.shape[1]
-        self._N = X.shape[0]
+    def __preprocess_data(self, X, Y):
+        self.__X = np.asarray(X)
+        self.__Y = np.asarray(Y)
+        self.__p = X.shape[1]
+        self.__N = X.shape[0]
 
         if self.intercept:
-            ones = np.reshape(np.ones(self._N), (self._N, 1))
-            self._X = np.hstack((ones, self._X))
-            self._p = self._p + 1
-        self.beta_hat = np.zeros(self._p)
+            ones = np.reshape(np.ones(self.__N), (self.__N, 1))
+            self.__X = np.hstack((ones, self.__X))
+            self.__p = self.__p + 1
+        self.beta_hat = np.zeros(self.__p)
 
     def fit(self, X, Y):
-        self._preprocess_data(X, Y)
+        self.__preprocess_data(X, Y)
         if self.gradient_descent:
             training_loss = []
-            self.beta_hat = np.random.uniform(size=self._p)
+            self.beta_hat = np.random.uniform(size=self.__p)
             for i in range(self.n_iter):
-                residual = self._Y - self._X.dot(self.beta_hat)
-                mse = (1 / self._N) * residual.T.dot(residual)
+                residual = self.__Y - self.__X.dot(self.beta_hat)
+                mse = (1 / self.__N) * residual.T.dot(residual)
                 training_loss.append(mse)
-                self.beta_hat -= 2 * self.learning_rate * (-residual.T.dot(self._X))
+                self.beta_hat -= 2 * self.learning_rate * (-residual.T.dot(self.__X))
             return training_loss
         else:
-            self.beta_hat = np.linalg.inv(self._X.T.dot(self._X)).dot(self._X.T).dot(self._Y)
-            residual = self._Y - self._X.dot(self.beta_hat)
-            mse = (1 / self._N) * residual.T.dot(residual)
+            self.beta_hat = np.linalg.inv(self.__X.T.dot(self.__X)).dot(self.__X.T).dot(self.__Y)
+            residual = self.__Y - self.__X.dot(self.beta_hat)
+            mse = (1 / self.__N) * residual.T.dot(residual)
             return mse
 
     def predict(self, X_new):
@@ -54,21 +54,21 @@ class RidgeRegression(LinearRegression):
         self.penalty = penalty
 
     def fit(self, X, Y):
-        super()._preprocess_data(X, Y)
+        super().__preprocess_data(X, Y)
 
         if self.gradient_descent:
             training_loss = []
-            self.beta_hat = np.random.uniform(size=self._p)
+            self.beta_hat = np.random.uniform(size=self.__p)
             for i in range(self.n_iter):
-                residual = self._Y - self._X.dot(self.beta_hat)
-                mse = (1 / self._N) * (residual.T.dot(residual) + self.penalty * np.sum(self.beta_hat ** 2))
+                residual = self.__Y - self.__X.dot(self.beta_hat)
+                mse = (1 / self.__N) * (residual.T.dot(residual) + self.penalty * np.sum(self.beta_hat ** 2))
                 training_loss.append(mse)
-                self.beta_hat -= 2 * self.learning_rate * (-residual.T.dot(self._X) + self.penalty * self.beta_hat)
+                self.beta_hat -= 2 * self.learning_rate * (-residual.T.dot(self.__X) + self.penalty * self.beta_hat)
             return training_loss
         else:
-            self.beta_hat = np.linalg.inv(self._X.T.dot(self._X) + self.penalty * np.eye(self._p)).dot(self._X.T).dot(self._Y)
-            residual = self._Y - self._X.dot(self.beta_hat)
-            loss = (1 / self._N) * (residual.T.dot(residual) + self.penalty * np.sum(self.beta_hat ** 2))
+            self.beta_hat = np.linalg.inv(self.__X.T.dot(self.__X) + self.penalty * np.eye(self.__p)).dot(self.__X.T).dot(self.__Y)
+            residual = self.__Y - self.__X.dot(self.beta_hat)
+            loss = (1 / self.__N) * (residual.T.dot(residual) + self.penalty * np.sum(self.beta_hat ** 2))
             return loss
 
 
@@ -77,31 +77,30 @@ class LassoRegression:
         self.n_iter = n_iter
         self.beta_hat = []
         self.intercept = intercept
-        self.penalty = penalty
-        self._X = None
-        self._Y = None
-        self._p = None
-        self._N = None
+        self.__X = None
+        self.__Y = None
+        self.__p = None
+        self.__N = None
 
     def _preprocess_data(self, X, Y):
-        self._X = np.asarray(X)
-        self._Y = np.asarray(Y)
-        self._p = X.shape[1]
-        self._N = X.shape[0]
+        self.__X = np.asarray(X)
+        self.__Y = np.asarray(Y)
+        self.__p = X.shape[1]
+        self.__N = X.shape[0]
 
         # Tricky way: here we do not divide the standard deviation of each features
         # Instead, we divide the l2-norm as sklearn does
         # For our data, the l2-norm did make a descent trend in loss
         # If we used np.std, the loss would be constant(hard to tune lambda later)
-        self._X = self._X / np.linalg.norm(self._X, axis=0)
+        self.__X = self.__X / np.linalg.norm(self.__X, axis=0)
 
         if self.intercept:
-            ones = np.reshape(np.ones(self._N), (self._N, 1))
-            self._X = np.hstack((ones, self._X))
-            self._p = self._p + 1
-        self.beta_hat = np.ones(shape=self._p)
+            ones = np.reshape(np.ones(self.__N), (self.__N, 1))
+            self.__X = np.hstack((ones, self.__X))
+            self.__p = self.__p + 1
+        self.beta_hat = np.ones(shape=self.__p)
 
-    def _soft_threshold(self, ols, lambdap):
+    def __soft_threshold(self, ols, lambdap):
         if ols < -lambdap / 2:
             return ols + lambdap
         elif ols > lambdap / 2:
@@ -115,13 +114,13 @@ class LassoRegression:
         training_loss = []
         betas = []
         for i in range(self.n_iter):
-            for j in range(self._p):
+            for j in range(self.__p):
                 if not (self.intercept and j == 0):
-                    X_j = self._X[:, j]
-                    _rio_j = np.reshape(X_j, (1, self._N)).dot(self._Y-self._X.dot(self.beta_hat) + self.beta_hat[j]*X_j)
-                    self.beta_hat[j] = self._soft_threshold(_rio_j, self.penalty)
-            residual = self._Y - self._X.dot(self.beta_hat)
-            mse = (1 / self._N) * (residual.T.dot(residual) + self.penalty * np.sum(np.abs(self.beta_hat)))
+                    X_j = self.__X[:, j]
+                    __rio_j = np.reshape(X_j, (1, self.__N)).dot(self.__Y-self.__X.dot(self.beta_hat) + self.beta_hat[j]*X_j)
+                    self.beta_hat[j] = self.__soft_threshold(__rio_j, self.penalty)
+            residual = self.__Y - self.__X.dot(self.beta_hat)
+            mse = (1 / self.__N) * (residual.T.dot(residual) + self.penalty * np.sum(np.abs(self.beta_hat)))
             training_loss.append(mse)
             betas.append(deepcopy(self.beta_hat))
         return training_loss, betas
