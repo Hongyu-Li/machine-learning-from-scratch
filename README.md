@@ -17,7 +17,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] KNN
 
-- [ ] Clustering: K-means
+- [ ] Clustering
 
 - [ ] Decision Trees
 
