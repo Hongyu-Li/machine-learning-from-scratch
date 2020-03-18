@@ -1,6 +1,7 @@
 import numpy as np
 from utils import compute_distance
 
+
 class DBSCAN:
     def __init__(self, eps=1, min_pts=10):
         self.eps = eps
@@ -46,8 +47,4 @@ class DBSCAN:
                 else:
                     # noisy point
                     self.labels[i] = -1
-
-
-
-
 
