@@ -17,7 +17,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] KNN
 
-- [ ] Clustering
+- [x] Clustering
 
 - [ ] Decision Trees
 
@@ -27,7 +27,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [ ] Neural Networks
 
-- [ ] EM algorithms
+- [x] EM algorithms
 
 - [ ] Graph Models
 
