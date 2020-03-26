@@ -19,7 +19,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] Clustering
 
-- [ ] Decision Trees
+- [x] Decision Trees
 
 - [ ] Emsemble Algorithms: boosting/bagging
 
