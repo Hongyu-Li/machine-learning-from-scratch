@@ -1,19 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-def compute_distance(a, b):
-    return np.sqrt(np.sum((a - b) ** 2))
-
-
-def confusion_matrix(y, y_pred):
-    classes = np.unique(y)
-    pred_classes = np.unique(y_pred)
-    mat = np.zeros((len(classes), len(pred_classes)))
-    for k in classes:
-        for j in pred_classes:
-            mat[k, j] = np.sum((y == k) * (y_pred == j))
-    return mat
+from utils import confusion_matrix,compute_distance
 
 
 class KNN:
