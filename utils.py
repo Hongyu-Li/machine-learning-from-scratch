@@ -8,9 +8,9 @@ def confusion_matrix(y, y_pred):
     classes = np.unique(y)
     pred_classes = np.unique(y_pred)
     mat = np.zeros((len(classes), len(pred_classes)))
-    for k in classes:
-        for j in pred_classes:
-            mat[k, j] = np.sum((y == k) * (y_pred == j))
+    for k in range(len(classes)):
+        for j in range(len(pred_classes)):
+            mat[k, j] = np.sum((y == classes[k]) * (y_pred == pred_classes[j]))
     return mat
 
 

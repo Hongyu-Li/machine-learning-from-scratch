@@ -1,12 +1,8 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-
-
-# Decision stump used as weak classifier
 from utils import confusion_matrix
 
-
+# Decision stump used as weak classifier
 class DecisionStump:
     def __init__(self, split_feature_idx, split_val):
         self.split_feature_idx = split_feature_idx
@@ -38,7 +34,7 @@ class Adaboost:
         pred_mat = np.zeros((self.n, self.n_trees))
         for i in range(self.n_trees):
             classifier = self.weak_learners[i]
-            pred_mat[:,i] = self.alpha[i] * classifier.fit(self.X)
+            pred_mat[:,i] = self.alpha[i] * np.asarray(classifier.fit(self.X))
         return self.__majority_vote(np.sum(pred_mat, 1))
 
     def predict(self, X_new):
@@ -58,7 +54,8 @@ class Adaboost:
             split_val, split_feature_idx, min_error = self.__find_best_split_feature(range(self.p))
             if min_error < 0.5:
                 stump = DecisionStump(split_feature_idx, split_val)
-                model_weight = 0.5 * np.log2(((1 - min_error) / min_error) + 1e-10)
+                # add a smaller value 1e-10 to avoid overflow issue
+                model_weight = 0.5 * np.log2((1 - min_error) / (min_error + 1e-10))
                 self.weak_learners.append(stump)
                 self.alpha.append(model_weight)
                 self.__update_sample_weights(stump, model_weight)
@@ -91,15 +88,15 @@ class Adaboost:
         return candidates[best_idx], err[best_idx]
 
     def __calculate_error_rate(self, preds):
-        return np.sum(self.weights * (preds == self.y)) / np.sum(self.weights)
+        return np.sum(self.weights * (preds != self.y)) / np.sum(self.weights)
 
 
-if __name__ == '__main__':
-    data = pd.read_csv('../data/diabetes.csv', sep=',')
-    X = np.asarray(data.iloc[:, :-1])
-    y = np.asarray(data.iloc[:, -1])
-    y[y == 0] = -1
-    model = Adaboost()
-    preds = model.fit(X, y)
-    mat = confusion_matrix(preds, y)
-    print(mat)
+# if __name__ == '__main__':
+#     data = pd.read_csv('../data/diabetes.csv', sep=',')
+#     X = np.asarray(data.iloc[:, :-1])
+#     y = np.asarray(data.iloc[:, -1])
+#     y[y == 0] = -1
+#     model = Adaboost()
+#     preds = model.fit(X, y)
+#     mat = confusion_matrix(y, preds)
+#     print(mat)
