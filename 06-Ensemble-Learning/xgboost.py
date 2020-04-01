@@ -36,19 +36,12 @@ class LogLoss:
         return p * (1-p)
 
 
-class XGBoostRegressionTree:
+class XGBoostRegressionTree(TreeStump):
     '''
     The algorithm for splitting point without using weighted quantile sketch
     '''
-    def __init__(self, X, y, features, samples_id, depth, max_depth, lambdap = 0.01, gamma=0.01, loss='mse'):
-        self.X = X
-        self.y = y
-        self.features = features
-        self.samples_count = len(X)
-        self.samples = samples_id
-        self.is_leaf = False
-        self.depth = depth
-        self.max_depth = max_depth
+
+    def __init__(self, X, y, features, samples_id, depth, max_depth, lambdap=0.01, gamma=0.01, loss='mse'):
         self.lambdap = lambdap
         self.gamma = gamma
         self.loss_metric = loss
@@ -56,14 +49,14 @@ class XGBoostRegressionTree:
             self.loss = MSE()
         elif loss == 'log':
             self.loss = LogLoss()
-        self.get_var_split()
+        super().__init__(X, y, features, samples_id, depth, max_depth)
 
     def __should_continue(self):
         return self.samples_count > 5 and len(self.features) != 0 and self.depth < self.max_depth - 1
 
     def get_var_split(self):
         if self.__should_continue():
-            self.split_val, self.split_feature = self.find_best_split_feature_and_value()
+            self.split_val, self.split_feature = super().find_best_split_feature_and_value()
             left_X, left_idx, left_y, right_X, right_idx, right_y = self.split_dataset_by_splitting_feature()
             self.left = XGBoostRegressionTree(left_X, left_y, list(self.features), self.samples[left_idx], self.depth + 1,
                                        self.max_depth, self.lambdap, self.gamma, self.loss_metric)
@@ -80,16 +73,6 @@ class XGBoostRegressionTree:
         left_y = np.concatenate((y[left_idx], y_pred[left_idx]))
         right_y = np.concatenate((y[right_idx], y_pred[right_idx]))
         return left_X, left_idx, left_y, right_X, right_idx, right_y
-
-    def find_best_split_feature_and_value(self):
-        features_loss = []
-        split_candidates = []
-        for feature in self.features:
-            split_val, loss = self.get_best_split_value(self.X[:, feature])
-            features_loss.append(loss)
-            split_candidates.append(split_val)
-        split_feature = np.argmin(features_loss)
-        return split_candidates[split_feature], self.features[split_feature]
 
     def __split_y_and_pred(self, y):
         mid_idx = len(y) // 2
@@ -118,9 +101,6 @@ class XGBoostRegressionTree:
         before_gain = np.sum(gradients)**2 / (np.sum(hessians) + self.lambdap)
         gain = after_gain - before_gain - self.gamma
         return -gain
-
-    def fit(self):
-        return [self.predict(i) for i in self.X]
 
     def predict(self, X_new):
         if self.is_leaf: return self.__calculate_leaf_score()
