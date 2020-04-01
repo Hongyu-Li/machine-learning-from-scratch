@@ -34,13 +34,13 @@ class TreeStump:
         features_loss = []
         split_candidates = []
         for feature in self.features:
-            split_val, loss = self.__get_best_split_value(self.X[:, feature])
+            split_val, loss = self.get_best_split_value(self.X[:, feature])
             features_loss.append(loss)
             split_candidates.append(split_val)
         split_feature = np.argmin(features_loss)
         return split_candidates[split_feature], self.features[split_feature]
 
-    def __get_best_split_value(self, feature):
+    def get_best_split_value(self, feature):
         candidates = np.unique(feature)
         loss = []
         for i in candidates:
