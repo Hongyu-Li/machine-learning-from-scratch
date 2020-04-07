@@ -169,9 +169,9 @@ class XGBoost:
         self.preds = np.zeros(self.y.shape)
 
 
-# if __name__ == '__main__':
-#     data = pd.read_csv('../data/housing.csv', sep=',')
-#     X = np.asarray(data.iloc[:, :-1])
-#     y = np.asarray(data.iloc[:, -1])
-#     model = XGBoost(classification=False,n_trees=200)
-#     preds = model.fit(X,y)
+if __name__ == '__main__':
+    data = pd.read_csv('../data/diabetes.csv', sep=',')
+    X = np.asarray(data.iloc[:, :-1])
+    y = np.asarray(data.iloc[:, -1])
+    model = XGBoost(classification=True,n_trees=200)
+    preds = model.fit(X,y)

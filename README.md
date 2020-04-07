@@ -21,7 +21,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] Decision Trees
 
-- [ ] Emsemble Algorithms: boosting/bagging
+- [x] Emsemble Algorithms: boosting/bagging
 
 - [ ] SVM
 
