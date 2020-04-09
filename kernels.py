@@ -13,7 +13,6 @@ def rbf_kernel(gamma, **args):
     def f(x1, x2):
         distance = np.linalg.norm(x1 - x2) ** 2
         return np.exp(-gamma * distance)
-
     return f
 
 
