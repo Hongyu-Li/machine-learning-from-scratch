@@ -23,7 +23,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] Emsemble Algorithms: boosting/bagging
 
-- [ ] SVM
+- [x] SVM
 
 - [ ] Neural Networks
 

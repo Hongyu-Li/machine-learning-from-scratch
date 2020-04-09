@@ -5,13 +5,10 @@ import cvxopt
 from kernels import linear_kernel, rbf_kernel, polynomial_kernel
 
 
-# Step4: for regression
-
-# Hide cvxopt output
-
-
-
 class SVC:
+    '''
+    only implement svm classifier for binary classification
+    '''
     def __init__(self, threshold=1e-10, C=None, kernel=linear_kernel()):
         self.threshold = threshold
         self.C = C
@@ -59,13 +56,13 @@ class SVC:
         return np.sign(y_pred)
 
 
-if __name__ == '__main__':
-    data = pd.read_csv('../data/diabetes.csv', sep=',')
-    X = np.asarray(data.iloc[:, :-1])
-    y = np.asarray(data.iloc[:, -1])
-    y[y == 0] = -1
-    # model = SVC(C=2, threshold=1e-8, kernel=rbf_kernel(0.1))
-    model = SVC(C=2, threshold=1e-8, kernel=polynomial_kernel(2))
-    preds = model.fit(X, y)
-    mat = confusion_matrix(y, preds)
-    print(mat)
+# if __name__ == '__main__':
+#     data = pd.read_csv('../data/diabetes.csv', sep=',')
+#     X = np.asarray(data.iloc[:, :-1])
+#     y = np.asarray(data.iloc[:, -1])
+#     y[y == 0] = -1
+#     # model = SVC(C=2, threshold=1e-8, kernel=rbf_kernel(0.1))
+#     model = SVC(C=2, threshold=1e-8, kernel=polynomial_kernel(2))
+#     preds = model.fit(X, y)
+#     mat = confusion_matrix(y, preds)
+#     print(mat)
