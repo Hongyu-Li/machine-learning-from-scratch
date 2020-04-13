@@ -170,10 +170,10 @@ class SVR:
 #     print(mat)
 
 
-if __name__ == '__main__':
-    rng = np.random.RandomState(0)
-    X = np.sort(5 * np.random.rand(40, 1), axis=0)
-    y = np.sin(X).ravel()
-    y[::5] += 3 * (0.5 - np.random.rand(8))
-    model = SVR(C=10, threshold=1e-6, eps=0.001, kernel=rbf_kernel(0.001))
-    preds = model.fit(X, y)
+# if __name__ == '__main__':
+#     rng = np.random.RandomState(0)
+#     X = np.sort(5 * np.random.rand(40, 1), axis=0)
+#     y = np.sin(X).ravel()
+#     y[::5] += 3 * (0.5 - np.random.rand(8))
+#     model = SVR(C=10, threshold=1e-6, eps=0.001, kernel=rbf_kernel(0.001))
+#     preds = model.fit(X, y)
