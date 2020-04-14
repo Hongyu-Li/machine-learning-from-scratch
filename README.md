@@ -25,9 +25,11 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] SVM
 
-- [ ] Neural Networks
+- [x] Neural Networks
 
 - [x] EM algorithms
+
+- [ ] Naive Bayesian Model & Bayesian Networks
 
 - [ ] Graph Models
 
