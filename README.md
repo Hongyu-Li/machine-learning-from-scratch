@@ -31,11 +31,13 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [ ] Naive Bayesian Model & Bayesian Networks
 
-- [ ] Graph Models
+- [ ] HMM
 
 - [ ] Sampling
 
 - [ ] Dimension Reduction: PCA
+
+- [ ] Model Evaluation & Information Theory
 
 
 ### Deep Learning
