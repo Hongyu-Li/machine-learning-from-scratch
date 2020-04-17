@@ -29,7 +29,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] EM algorithms
 
-- [ ] Naive Bayesian Model & Bayesian Networks
+- [x] Naive Bayesian Model & Bayesian Networks
 
 - [ ] HMM
 
