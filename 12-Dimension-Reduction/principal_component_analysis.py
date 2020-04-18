@@ -55,6 +55,7 @@ class KPCA:
 
 if __name__ == '__main__':
     X, color = datasets.make_swiss_roll(n_samples=1500)
+    # X, color = datasets.make_s_curve(1500, random_state=0)
     # pca = PCA()
     pca = KPCA()
     kpca = KPCA(kernel=rbf_kernel(0.01))
