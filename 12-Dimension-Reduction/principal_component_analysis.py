@@ -30,19 +30,23 @@ class KPCA:
         self.X = None
         self.W = None
         self.kernel = kernel
+        self.n = 0
 
     def fit(self, X, d):
-        self.X = X
-        n = X.shape[0]
-        centered_X = X - np.mean(X, 0)
-        kernel_mat = np.zeros((n,n))
-        for i in range(n):
-            for j in range(n):
-                kernel_mat[i,j] = self.kernel(centered_X[i], centered_X[j])
+        self.X = X - np.mean(X, 0)
+        self.n = X.shape[0]
+        kernel_mat = self.__get_kernel_matrix()
         eigenvalues, eigenvectors = np.linalg.eigh(kernel_mat)
         indices = np.argsort(eigenvalues)[::-1][:d]
         self.W = eigenvectors[:, indices]
         return kernel_mat.dot(self.W)
+
+    def __get_kernel_matrix(self):
+        kernel_mat = np.zeros((self.n, self.n))
+        for i in range(self.n):
+            for j in range(self.n):
+                kernel_mat[i, j] = self.kernel(self.X[i], self.X[j])
+        return kernel_mat
 
     def predict(self, X_new):
         centered_X_new = X_new - np.mean(self.X, 0)

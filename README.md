@@ -35,7 +35,7 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [ ] Sampling
 
-- [ ] Dimension Reduction: PCA
+- [ ] Dimension Reduction: PCA, KPCA, MDS, ISOMAP, LLE
 
 - [ ] Model Evaluation & Information Theory
 
