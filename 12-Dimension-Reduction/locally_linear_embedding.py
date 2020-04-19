@@ -4,6 +4,10 @@ from sklearn import datasets
 import matplotlib.pyplot as plt
 
 class LLE:
+    """
+    references: https://github.com/tuchandra/LLE/blob/master/LLE%20demo.ipynb
+    https://github.com/tbertinmahieux/BostonHackDay/blob/master/PythonSrc/LLE.py
+    """
     def __init__(self):
         self.W = None
         self.X = None
