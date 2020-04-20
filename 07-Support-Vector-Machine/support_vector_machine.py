@@ -136,7 +136,7 @@ class SVR:
         P = cvxopt.matrix(
             np.vstack((np.hstack((kernel_mat, -kernel_mat)), np.hstack((-kernel_mat, kernel_mat)))),
             tc='d')
-        q = cvxopt.matrix(np.hstack((self.eps - y, self.eps + y)), tc='d')
+        q = cvxopt.matrix(np.hstack((self.eps - self.y, self.eps + self.y)), tc='d')
         A = cvxopt.matrix(np.hstack((np.ones(self.n), -np.ones(self.n))), (1, 2 * self.n), tc='d')
         b = cvxopt.matrix(0, tc='d')
         G = cvxopt.matrix(np.eye(2 * self.n) * -1, tc='d')
