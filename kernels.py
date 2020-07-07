@@ -4,7 +4,6 @@ import numpy as np
 def linear_kernel(**args):
     def f(x1, x2):
         return np.inner(x1, x2)
-
     return f
 
 

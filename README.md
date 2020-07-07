@@ -37,7 +37,9 @@ Of course, I summarized these notebooks for my purpose. Just hope it could help 
 
 - [x] Dimension Reduction: PCA, KPCA, MDS, ISOMAP, LLE
 
-- [ ] Model Evaluation & Information Theory
+- [ ] Model Selection
+
+- [ ] Information Theory
 
 
 ### Deep Learning
