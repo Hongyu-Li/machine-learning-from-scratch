@@ -1,7 +1,8 @@
 numpy
 matplotlib
 pandas
-copy
 sklearn
 scipy
 cvxopt==1.2.0
+tqdm
+ipywidgets

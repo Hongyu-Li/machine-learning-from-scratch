@@ -27,3 +27,5 @@ def calculate_gini(y):
 
 def calculate_square_loss(i):
     return np.sum((i - np.mean(i)) ** 2)
+
+
