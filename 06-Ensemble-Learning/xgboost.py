@@ -3,10 +3,7 @@ import sys
 from copy import deepcopy
 from activations import Sigmoid
 import pandas as pd
-
 from losses import MSE, LogLoss
-
-sys.path.insert(0, '../05-Decision-Tree/')
 from decision_trees import TreeStump
 
 

@@ -1,15 +1,11 @@
 import pandas as pd
 import numpy as np
-import sys
 from criterions import *
 from copy import deepcopy
-
-sys.path.insert(0, '../02-Linear-Models/')
 from regression import LinearRegression
 
 
 class stepwise_selection:
-
     """
     For linear regression only.
     Iteration criterion: R2
@@ -95,9 +91,10 @@ class stepwise_selection:
                 self.__initial_features.pop(iter_r2_decrease.argmin())
                 self.best_r2 -= min(iter_r2_decrease)
 
-            if max(iter_r2_increase, default=0) < self.threshold < min(iter_r2_decrease,default=0):
+            if max(iter_r2_increase, default=0) < self.threshold < min(iter_r2_decrease, default=0):
                 return self.__feature_names[self.__best_features]
         return self.__feature_names[self.__best_features]
+
 
 if __name__ == '__main__':
     data = pd.read_csv('../data/housing.csv', sep=',')

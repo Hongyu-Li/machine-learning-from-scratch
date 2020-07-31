@@ -1,10 +1,7 @@
 import numpy as np
 from activations import Sigmoid
-import sys
 from copy import deepcopy
 import pandas as pd
-
-sys.path.insert(0, '../05-Decision-Tree/')
 from decision_trees import RegressionTree
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utils import confusion_matrix,compute_distance
+from utils import confusion_matrix, compute_distance
 
 
 class KNN:

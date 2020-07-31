@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def compute_distance(a, b):
     return np.sqrt(np.sum((a - b) ** 2))
 
@@ -27,5 +28,3 @@ def calculate_gini(y):
 
 def calculate_square_loss(i):
     return np.sum((i - np.mean(i)) ** 2)
-
-

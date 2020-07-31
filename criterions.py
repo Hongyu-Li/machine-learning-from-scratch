@@ -1,4 +1,3 @@
-from utils import calculate_square_loss
 import numpy as np
 
 

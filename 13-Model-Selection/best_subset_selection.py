@@ -1,11 +1,8 @@
 import numpy as np
 import pandas as pd
 import itertools
-import sys
 from criterions import *
 import matplotlib.pyplot as plt
-
-sys.path.insert(0, '../02-Linear-Models/')
 from regression import LinearRegression
 
 

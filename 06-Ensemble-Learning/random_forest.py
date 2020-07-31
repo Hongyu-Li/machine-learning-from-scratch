@@ -1,8 +1,5 @@
 import numpy as np
-import sys
-sys.path.insert(0, '../05-Decision-Tree/')
 from decision_trees import ClassificationTree, RegressionTree
-
 import pandas as pd
 from utils import confusion_matrix
 
