@@ -3,7 +3,6 @@ import numpy as np
 import sys
 from criterions import *
 from copy import deepcopy
-import itertools
 
 sys.path.insert(0, '../02-Linear-Models/')
 from regression import LinearRegression
@@ -13,78 +12,72 @@ class stepwise_selection:
 
     """
     For linear regression only.
+    Iteration criterion: R2
     """
 
-    def __init__(self):
-        self.X, self.y = None, None
+    def __init__(self, df, threshold):
+        self.X = np.asarray(df.iloc[:, :-1])
+        self.y = np.asarray(df.iloc[:, -1])
+        self.p = df.shape[1] - 1
+        self.best_r2 = 0
+        self.threshold = threshold
+        self.__feature_names = df.columns
+        self.__best_features = []
+        self.__initial_features = [i for i in range(self.p)]
 
-    def forward_selection(self, df, threshold, criterion):
-        _, p = df.shape
-        y = np.asarray(df.iloc[:, -1])
-        flag = 0 if criterion == 'r2' else calculate_sst(y)
-        selected_idx = []
-        unselected_idx = [i for i in range(p-1)]
-        for iter in range(p-1):
-            iter_summary = []
-            for var_idx in unselected_idx:
-                linear_reg = LinearRegression(gradient_descent=False)
-                candidate_idx = selected_idx + [var_idx]
-                X = np.asarray(df.iloc[:, candidate_idx])
-                linear_reg.fit(X, y)
-                y_preds = [linear_reg.predict(x) for x in X]
-                if criterion == 'rss':
-                    candidate_flag = calculate_rss(y, y_preds)
-                    iter_summary.append(candidate_flag)
-                else:
-                    candidate_flag = calculate_r2(y, y_preds)
-                    iter_summary.append(candidate_flag)
-            iter_summary = np.asarray(iter_summary)
-            if max(abs(iter_summary - flag)) < threshold:
-                return df.columns[selected_idx]
+    def forward_selection(self):
+        for _ in range(self.p):
+            iter_r2_increase = []
+            for var_idx in self.__initial_features:
+                current_r2 = self.__build_model(var_idx, 'forward')
+                iter_r2_increase.append(current_r2 - self.best_r2)
+            iter_r2_increase = np.asarray(iter_r2_increase)
+            if max(iter_r2_increase) < self.threshold:
+                return self.__feature_names[self.__best_features]
             else:
-                selected_var_idx = abs(iter_summary - flag).argmax()
-                selected_idx.append(selected_var_idx)
-                unselected_idx.pop(selected_var_idx)
-                flag = iter_summary[selected_var_idx]
-        return df.columns[selected_idx]
+                selected_feature_idx = self.__initial_features.pop(iter_r2_increase.argmax())
+                self.__best_features.append(selected_feature_idx)
+                self.best_r2 += max(iter_r2_increase)
+        return self.__feature_names[self.__best_features]
 
-    def backward_selection(self, df, threshold, criterion):
-        _, p = df.shape
-        y = np.asarray(df.iloc[:, -1])
+    def __build_model(self, var_idx, method='forward'):
         linear_reg = LinearRegression(gradient_descent=False)
-        X = np.asarray(data)
-        linear_reg.fit(X, y)
+        if method == 'forward':
+            candidate_features = self.__best_features + [var_idx]
+        elif method == 'backward':
+            candidate_features = deepcopy(self.__initial_features)
+            candidate_features.remove(var_idx)
+        X = self.X[:, candidate_features]
+        linear_reg.fit(X, self.y)
         y_preds = [linear_reg.predict(x) for x in X]
-        flag = calculate_r2(y, y_preds) if criterion == 'r2' else calculate_rss(y, y_preds)
-        selected_idx = [i for i in range(p - 1)]
-        unselected_idx = []
-        for iter in range(1, p-1):
-            iter_summary = []
-            for var_idx in selected_idx:
-                linear_reg = LinearRegression(gradient_descent=False)
-                candidate_idx = deepcopy(selected_idx)
-                candidate_idx.remove(var_idx)
-                X = np.asarray(data.iloc[:, candidate_idx])
-                linear_reg.fit(X, y)
-                y_preds = [linear_reg.predict(x) for x in X]
-                if criterion == 'rss':
-                    candidate_flag = calculate_rss(y, y_preds)
-                    iter_summary.append(candidate_flag)
-                else:
-                    candidate_flag = calculate_r2(y, y_preds)
-                    iter_summary.append(candidate_flag)
-            iter_summary = np.asarray(iter_summary)
-            if min(abs(iter_summary - flag)) < threshold:
-                return df.columns[selected_idx]
+        return calculate_r2(self.y, y_preds)
+
+    def backward_selection(self):
+        self.best_r2 = self.__get_full_model_r2()
+        self.__best_features = self.__initial_features
+        for _ in range(self.p):
+            iter_r2_decrease = []
+            for var_idx in self.__initial_features:
+                current_r2 = self.__build_model(var_idx, 'backward')
+                iter_r2_decrease.append(self.best_r2 - current_r2)
+            iter_r2_decrease = np.asarray(iter_r2_decrease)
+            if min(iter_r2_decrease) > self.threshold:
+                return self.__feature_names[self.__best_features]
             else:
-                unselected_var_idx = abs(iter_summary - flag).argmin()
-                unselected_idx.append(unselected_var_idx)
-                selected_idx.pop(unselected_var_idx)
-                flag = iter_summary[unselected_var_idx]
-        return df.columns[selected_idx]
+                self.__initial_features.pop(iter_r2_decrease.argmin())
+                self.best_r2 -= min(iter_r2_decrease)
+        return self.__feature_names[self.__best_features]
+
+    def __get_full_model_r2(self):
+        linear_reg = LinearRegression(gradient_descent=False)
+        linear_reg.fit(self.X, self.y)
+        y_preds = [linear_reg.predict(x) for x in self.X]
+        return calculate_r2(self.y, y_preds)
+
 
 if __name__ == '__main__':
     data = pd.read_csv('../data/housing.csv', sep=',')
-    selection = stepwise_selection()
-    # a = selection.forward_selection(data, 1e-2, 'rss')
-    b = selection.backward_selection(data, 1e-2, 'rss')
+    forward = stepwise_selection(data, 0.1)
+    a = forward.forward_selection()
+    backward = stepwise_selection(data, 0.5)
+    b = backward.backward_selection()
