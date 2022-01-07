@@ -3,6 +3,6 @@ matplotlib
 pandas
 sklearn
 scipy
-cvxopt==1.2.0
+cvxopt==1.2.7
 tqdm
 ipywidgets
